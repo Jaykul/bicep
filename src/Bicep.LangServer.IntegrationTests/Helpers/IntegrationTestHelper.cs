@@ -25,7 +25,7 @@ namespace Bicep.LangServer.IntegrationTests
 {
     public static class IntegrationTestHelper
     {
-        private const int DefaultTimeout = 20000;
+        private const int DefaultTimeout = 60000;
 
         public static async Task<ILanguageClient> StartServerWithClientConnectionAsync(Action<LanguageClientOptions> onClientOptions, IResourceTypeProvider? resourceTypeProvider = null, IFileResolver? fileResolver = null)
         {
@@ -45,8 +45,8 @@ namespace Bicep.LangServer.IntegrationTests
                 });
             var _ = server.RunAsync(CancellationToken.None); // do not wait on this async method, or you'll be waiting a long time!
 
-            var client = LanguageClient.PreInit(options => 
-            {   
+            var client = LanguageClient.PreInit(options =>
+            {
                 options
                     .WithInput(clientPipe.Reader)
                     .WithOutput(serverPipe.Writer);
